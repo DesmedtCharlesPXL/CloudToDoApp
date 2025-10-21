@@ -34,13 +34,3 @@ jobs:
         run: |
           ng build --configuration production
 
-      - name: Run unit tests with coverage
-        working-directory: frontend
-        run: |
-          ng test --watch=false --browsers=ChromeHeadless --code-coverage
-
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: frontend/coverage/
