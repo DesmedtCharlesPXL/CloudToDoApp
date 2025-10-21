@@ -11,29 +11,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '16' 
+          node-version: '16'
 
+      # Step 3: Install dependencies
       - name: Install dependencies
+        working-directory: ./CloudToDoApp
         run: |
           npm install -g @angular/cli
           npm install
 
+      # Step 4: Build Angular app
       - name: Build Angular app
+        working-directory: ./CloudToDoApp
         run: |
           ng build --configuration production
 
+      # Step 5: Run unit tests and generate coverage
       - name: Run unit tests with coverage
+        working-directory: ./CloudToDoApp
         run: |
           ng test --watch=false --browsers=ChromeHeadless --code-coverage
 
+      # Step 6: Upload coverage report
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: coverage/
+          path: CloudToDoApp/coverage/
